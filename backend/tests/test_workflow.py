@@ -1,5 +1,3 @@
-import sys
-sys.path.insert(0, "C:/Users/akara/hackathon-starter/backend")
 import asyncio
 from app.agents.workflow import run_workflow
 
