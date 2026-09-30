@@ -1,5 +1,5 @@
 import logging
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from app.core.config import get_settings
@@ -43,12 +43,12 @@ def create_app() -> FastAPI:
     app.include_router(foodbridge_router, prefix="/api", tags=["foodbridge"])
 
     @app.get("/")
-    async def root():
+    async def root() -> dict:
         return {"message": "Hackathon Starter API running", "docs": "/docs", "health": "/api/health"}
 
     # Timeout middleware (simple)
     @app.middleware("http")
-    async def timeout_middleware(request: Request, call_next):
+    async def timeout_middleware(request: Request, call_next) -> Response:
         try:
             return await call_next(request)
         except Exception as e:

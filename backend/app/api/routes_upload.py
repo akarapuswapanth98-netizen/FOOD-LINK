@@ -16,7 +16,7 @@ ALLOWED_IMAGE = {".jpg", ".jpeg", ".png", ".webp"}
 ALLOWED_ALL = ALLOWED_TEXT | ALLOWED_IMAGE
 
 @router.post("/upload")
-async def upload(file: UploadFile = File(...)):
+async def upload(file: UploadFile = File(...)) -> dict:
     s = get_settings()
     ext = os.path.splitext(file.filename or "")[1].lower()
     if ext not in ALLOWED_ALL:

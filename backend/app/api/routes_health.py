@@ -5,7 +5,7 @@ from app.core.config import get_settings
 router = APIRouter()
 
 @router.get("/health", response_model=HealthResponse)
-async def health():
+async def health() -> HealthResponse:
     s = get_settings()
     # Detect if API key present without exposing it
     configured = bool(s.LLM_API_KEY) or s.LLM_PROVIDER == "mock"
@@ -20,12 +20,12 @@ async def health():
     )
 
 @router.get("/health/db")
-async def db_health():
+async def db_health() -> dict:
     from app.database.service import get_db
     db = get_db()
     return await db.health()
 
 @router.get("/health/rag")
-async def rag_health():
+async def rag_health() -> dict:
     s = get_settings()
     return {"enabled": s.RAG_ENABLED, "provider": s.RAG_PROVIDER if s.RAG_ENABLED else "disabled"}

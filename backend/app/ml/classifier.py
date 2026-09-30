@@ -4,7 +4,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report
 from .preprocessing import train_test_split_simple
 
-def train_classifier(df: pd.DataFrame, target: str, n_estimators: int = 100):
+def train_classifier(df: pd.DataFrame, target: str, n_estimators: int = 100) -> dict:
     (X_train, X_test, y_train, y_test), columns = train_test_split_simple(df, target)
     model = RandomForestClassifier(n_estimators=n_estimators, random_state=42)
     model.fit(X_train, y_train)

@@ -16,7 +16,7 @@ the backend must never break because of an optional dependency.
 import asyncio
 import inspect
 import logging
-from typing import Optional
+from typing import Any, Callable, Optional
 
 from app.core.config import get_settings
 from app.foodbridge.agents import (
@@ -39,7 +39,7 @@ from app.foodbridge.state import FoodBridgeState
 logger = logging.getLogger("hackathon.foodbridge")
 
 
-def build_match_workflow(matching_fn=None):
+def build_match_workflow(matching_fn: Optional[Callable[..., dict]] = None) -> Any:
     """Compile the StateGraph. matching_fn is injectable for retry tests."""
     matching_fn = matching_fn or matching_node
     try:
@@ -98,7 +98,7 @@ class _SequentialFoodBridge:
     at most 1 + MATCH_MAX_RETRIES matching attempts, never a loop.
     """
 
-    def __init__(self, matching_fn=None):
+    def __init__(self, matching_fn: Optional[Callable[..., dict]] = None) -> None:
         self.matching_fn = matching_fn or matching_node
 
     async def ainvoke(self, state: dict) -> dict:
@@ -107,7 +107,7 @@ class _SequentialFoodBridge:
         s.setdefault("steps", [])
         s.setdefault("retry_count", 0)
 
-        async def apply(fn):
+        async def apply(fn) -> None:
             s.update(await _run_node(fn, s))
 
         await apply(coordinator_node)
@@ -144,7 +144,7 @@ class _SequentialFoodBridge:
 _workflow = None
 
 
-def get_match_workflow():
+def get_match_workflow() -> Any:
     global _workflow
     if _workflow is None:
         _workflow = build_match_workflow()

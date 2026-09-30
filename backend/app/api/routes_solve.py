@@ -35,7 +35,7 @@ class SolveResponse(BaseModel):
     reasoning_steps: List[str] = Field(default_factory=list)
 
 @router.post("/solve", response_model=SolveResponse)
-async def solve(req: SolveRequest):
+async def solve(req: SolveRequest) -> SolveResponse:
     s = get_settings()
     problem = req.get_problem()
     sources = []

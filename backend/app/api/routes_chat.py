@@ -9,7 +9,7 @@ logger = logging.getLogger("hackathon.chat")
 router = APIRouter()
 
 @router.post("/chat", response_model=ChatResponse)
-async def chat(req: ChatRequest):
+async def chat(req: ChatRequest) -> ChatResponse:
     s = get_settings()
     # Handle missing API key gracefully - LLMService will fallback to mock or error
     llm = LLMService()

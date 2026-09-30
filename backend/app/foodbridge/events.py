@@ -11,7 +11,7 @@ EventStatus = str  # "running" | "completed" | "failed"
 
 
 class EventStore:
-    def __init__(self, maxlen: int = 2000):
+    def __init__(self, maxlen: int = 2000) -> None:
         self._events: deque = deque(maxlen=maxlen)
 
     def emit(self, workflow_id: str, agent: str, status: EventStatus, detail: str) -> Dict:

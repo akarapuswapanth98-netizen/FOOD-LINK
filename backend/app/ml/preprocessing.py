@@ -9,7 +9,7 @@ def clean_dataframe(df: pd.DataFrame) -> pd.DataFrame:
         df[col] = df[col].astype(str).str.strip()
     return df
 
-def train_test_split_simple(df: pd.DataFrame, target: str, test_size: float = 0.2):
+def train_test_split_simple(df: pd.DataFrame, target: str, test_size: float = 0.2) -> tuple:
     from sklearn.model_selection import train_test_split
     X = df.drop(columns=[target])
     y = df[target]

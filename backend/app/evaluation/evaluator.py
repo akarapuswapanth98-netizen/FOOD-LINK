@@ -7,7 +7,7 @@ from typing import Dict, Any
 from .metrics import latency_ms, check_required_fields
 
 class Evaluator:
-    def __init__(self):
+    def __init__(self) -> None:
         self.runs: list = []
 
     async def evaluate_response(self, response: dict, required_fields: list = ["answer"]) -> Dict[str, Any]:

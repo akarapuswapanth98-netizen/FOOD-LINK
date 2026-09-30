@@ -3,13 +3,16 @@ Provider-independent LLMService - NEW location per spec (app/ai).
 Re-exports with provider adapters isolated.
 """
 import os
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
 from app.core.config import get_settings
 from app.core.errors import LLMNotConfiguredError
 
+if TYPE_CHECKING:
+    from app.ai.providers.base import BaseProvider
+
 # Thin wrapper that delegates to providers/
 class LLMService:
-    def __init__(self, provider: Optional[str] = None, model: Optional[str] = None, api_key: Optional[str] = None):
+    def __init__(self, provider: Optional[str] = None, model: Optional[str] = None, api_key: Optional[str] = None) -> None:
         s = get_settings()
         self.provider = (provider or s.LLM_PROVIDER).lower()
         self.model = model or s.LLM_MODEL
@@ -20,7 +23,7 @@ class LLMService:
             self.api_key = pk or s.LLM_API_KEY or ""
         self.configured = self.provider == "mock" or bool(self.api_key)
 
-    def _get_provider(self):
+    def _get_provider(self) -> "BaseProvider":
         if self.provider == "mock":
             from .providers.mock import MockProvider
             return MockProvider(self.model)
@@ -40,7 +43,7 @@ class LLMService:
             from .providers.mock import MockProvider
             return MockProvider(self.model)
 
-    def ensure_configured(self):
+    def ensure_configured(self) -> None:
         if not self.configured:
             raise LLMNotConfiguredError(self.provider)
 

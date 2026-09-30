@@ -8,7 +8,7 @@ from typing import Optional
 logger = logging.getLogger("hackathon.vision")
 
 class VisionService:
-    def __init__(self):
+    def __init__(self) -> None:
         self.enabled = True
         logger.info("VisionService init (lazy - models loaded on demand)")
 

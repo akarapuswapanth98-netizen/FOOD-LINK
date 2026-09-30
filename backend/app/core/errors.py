@@ -6,7 +6,7 @@ logger = logging.getLogger("hackathon")
 
 
 class AppError(Exception):
-    def __init__(self, message: str, status_code: int = 500, detail: str | None = None):
+    def __init__(self, message: str, status_code: int = 500, detail: str | None = None) -> None:
         self.message = message
         self.status_code = status_code
         self.detail = detail
@@ -14,7 +14,7 @@ class AppError(Exception):
 
 
 class LLMNotConfiguredError(AppError):
-    def __init__(self, provider: str):
+    def __init__(self, provider: str) -> None:
         super().__init__(
             message=f"LLM provider '{provider}' not configured. Set LLM_API_KEY or {provider.upper()}_API_KEY in .env",
             status_code=503,
@@ -23,11 +23,11 @@ class LLMNotConfiguredError(AppError):
 
 
 class RAGNotEnabledError(AppError):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(message="RAG is disabled. Set RAG_ENABLED=true in .env", status_code=400)
 
 
-async def app_error_handler(request: Request, exc: AppError):
+async def app_error_handler(request: Request, exc: AppError) -> JSONResponse:
     logger.error(f"AppError {exc.status_code}: {exc.message} | detail={exc.detail} | path={request.url.path}")
     return JSONResponse(
         status_code=exc.status_code,
@@ -35,7 +35,7 @@ async def app_error_handler(request: Request, exc: AppError):
     )
 
 
-async def unhandled_error_handler(request: Request, exc: Exception):
+async def unhandled_error_handler(request: Request, exc: Exception) -> JSONResponse:
     logger.exception(f"Unhandled error at {request.url.path}: {exc}")
     return JSONResponse(
         status_code=500,

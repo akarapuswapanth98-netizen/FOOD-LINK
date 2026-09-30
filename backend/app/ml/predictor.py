@@ -4,7 +4,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 from .preprocessing import train_test_split_simple
 
-def train_regressor(df: pd.DataFrame, target: str):
+def train_regressor(df: pd.DataFrame, target: str) -> dict:
     (X_train, X_test, y_train, y_test), columns = train_test_split_simple(df, target)
     model = RandomForestRegressor(random_state=42)
     model.fit(X_train, y_train)
@@ -12,7 +12,7 @@ def train_regressor(df: pd.DataFrame, target: str):
     rmse = (mean_squared_error(y_test, pred) ** 0.5)
     return {"model": model, "columns": columns, "rmse": rmse}
 
-def predict_single(model, columns, input_dict: dict):
+def predict_single(model, columns: list, input_dict: dict) -> object:
     df = pd.DataFrame([input_dict])
     df = pd.get_dummies(df)
     for c in columns:

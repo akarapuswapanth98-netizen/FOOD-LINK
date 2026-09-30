@@ -9,7 +9,7 @@ from app.core.config import get_settings
 logger = logging.getLogger("hackathon.db")
 
 class DatabaseService:
-    def __init__(self):
+    def __init__(self) -> None:
         s = get_settings()
         self.enabled = s.SUPABASE_ENABLED
         self.url = s.SUPABASE_URL
@@ -17,7 +17,7 @@ class DatabaseService:
         self._client = None
         logger.info(f"DB init enabled={self.enabled}")
 
-    def _get_client(self):
+    def _get_client(self) -> Optional[object]:
         if not self.enabled:
             return None
         if self._client:

@@ -489,3 +489,25 @@ def test_demo_reset_reruns_match_live():
     again = client.post(f"{BASE}/match", json={"surplus_id": "food-001"})
     assert again.status_code == 200, again.text
     assert again.json()["success"] is True and again.json()["total_allocated"] == 80
+
+
+# ------------------------------------------------- board seed coverage
+def test_board_vegetarian_lots_all_match_successfully():
+    """Every vegetarian board lot rescues end-to-end (each consumes its own lot)."""
+    for lid in ["food-002", "food-003", "food-004", "food-005", "food-006", "food-008", "food-009"]:
+        r = client.post(f"{BASE}/match", json={"surplus_id": lid})
+        assert r.status_code == 200, lid
+        j = r.json()
+        assert j["success"] is True, lid
+        assert j["workflow_status"] == "completed", lid
+        assert j["total_allocated"] > 0, lid
+
+
+def test_nonveg_lot_fails_honestly_with_no_matching_shelters():
+    """food-007 (chicken, no tags) matches no vegetarian shelter - honest failure, no crash."""
+    r = client.post(f"{BASE}/match", json={"surplus_id": "food-007"})
+    assert r.status_code == 200, r.text
+    j = r.json()
+    assert j["success"] is False
+    assert j["workflow_status"] == "failed"
+    assert j["error"]["code"] == "NO_MATCHING_SHELTERS"

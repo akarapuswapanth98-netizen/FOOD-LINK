@@ -17,7 +17,7 @@ def utcnow() -> datetime:
 
 
 class FoodBridgeStore:
-    def __init__(self, seed: bool = True):
+    def __init__(self, seed: bool = True) -> None:
         self.restaurants: Dict[str, Restaurant] = {}
         self.surpluses: Dict[str, FoodSurplus] = {}
         self.shelters: Dict[str, Shelter] = {}

@@ -17,6 +17,21 @@ the same lot. FOODLINK AI is that layer.
 
 ## Approach & algorithmic logic
 
+```mermaid
+flowchart LR
+    R[Restaurants\nsurplus lots] --> C[coordinator]
+    C --> RN[restaurant\nvalidate + expiry]
+    RN --> S[shelter\nradius + diet filter]
+    S --> M[matching\nweighted score +\ntwo-pass allocate]
+    M --> L[logistics\nnearest-first batches]
+    L --> V{verification}
+    V -->|pass| F[coordinator_final\ncommit + summary]
+    V -->|retry ≤ 1| M
+    V -->|exhausted| E[coordinator_error\n200 + failed]
+    F --> SH[Shelters]
+    E --> SH
+```
+
 - **Agent pipeline** (`backend/app/foodbridge/workflow.py`, `agents.py`):
   `coordinator → restaurant → shelter → matching → logistics → verification → coordinator`.
 - **Matching** (`backend/app/foodbridge/scoring.py`): haversine distance, demand
@@ -63,7 +78,7 @@ the same lot. FOODLINK AI is that layer.
 python -m venv venv && venv\Scripts\activate
 pip install -r requirements.txt
 uvicorn app.main:app --port 8000
-pytest tests/            # 45 tests
+pytest tests/            # 47 tests
 
 # frontend (from frontend/)
 npm install

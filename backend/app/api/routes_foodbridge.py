@@ -42,17 +42,17 @@ def _lot_conflict(code: str, message: str, lot: FoodSurplus) -> JSONResponse:
 
 
 @router.get("/restaurants")
-async def list_restaurants():
+async def list_restaurants() -> dict:
     return {"restaurants": [r.model_dump(mode="json") for r in get_store().list_restaurants()]}
 
 
 @router.get("/shelters")
-async def list_shelters():
+async def list_shelters() -> dict:
     return {"shelters": [s.model_dump(mode="json") for s in get_store().list_shelters()]}
 
 
 @router.get("/surplus")
-async def list_surplus(restaurant_id: Optional[str] = None, include_all: bool = False):
+async def list_surplus(restaurant_id: Optional[str] = None, include_all: bool = False) -> dict:
     """Available lots by default; consumed lots only with include_all=true."""
     store = get_store()
     lots = (store.list_surpluses(restaurant_id) if include_all
@@ -61,7 +61,7 @@ async def list_surplus(restaurant_id: Optional[str] = None, include_all: bool = 
 
 
 @router.post("/surplus", status_code=201)
-async def create_surplus(req: CreateSurplusRequest):
+async def create_surplus(req: CreateSurplusRequest) -> dict:
     store = get_store()
     if store.get_restaurant(req.restaurant_id) is None:
         raise AppError("Restaurant not found", status_code=404, detail=f"restaurant_id={req.restaurant_id}")
@@ -83,7 +83,7 @@ async def create_surplus(req: CreateSurplusRequest):
 
 
 @router.post("/match", response_model=MatchResponse)
-async def match(req: MatchRequest):
+async def match(req: MatchRequest) -> MatchResponse:
     """Run the six-agent match workflow. Logical failures return 200 + status=failed."""
     store = get_store()
 
@@ -185,7 +185,7 @@ async def list_agent_events(
 
 
 @router.post("/demo/reset")
-async def demo_reset():
+async def demo_reset() -> dict:
     # demo-only: hackathon rehearsal convenience, not a production feature (no auth).
     store = get_store()
     store.reset()  # reseeds rest-001, 3 shelters, food-001/80/available; also clears _reserved claims

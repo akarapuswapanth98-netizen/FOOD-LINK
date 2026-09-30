@@ -11,17 +11,17 @@ from app.core.errors import RAGNotEnabledError
 logger = logging.getLogger("hackathon.rag")
 
 class RAGService:
-    def __init__(self):
+    def __init__(self) -> None:
         self.enabled = get_settings().RAG_ENABLED
         self._index = None
         self._documents: List[Dict] = []  # Fallback storage
         logger.info(f"RAG init enabled={self.enabled}")
 
-    def ensure_enabled(self):
+    def ensure_enabled(self) -> None:
         if not self.enabled:
             raise RAGNotEnabledError()
 
-    def _try_llama_index(self):
+    def _try_llama_index(self) -> bool:
         try:
             import llama_index
             return True

@@ -4,13 +4,13 @@ Modular nodes from nodes.py, state from state.py.
 Falls back to sequential if langgraph not installed.
 """
 import logging
-from typing import Optional
+from typing import Any, Optional
 from app.agents.state import AgentState
 from app.agents.nodes import planner_node, reasoner_node, tool_node, validator_node, final_node, formatter_node
 
 logger = logging.getLogger("hackathon.workflow")
 
-def build_workflow(include_tool: bool = False, include_formatter: bool = False):
+def build_workflow(include_tool: bool = False, include_formatter: bool = False) -> Any:
     try:
         from langgraph.graph import StateGraph, END
         workflow = StateGraph(AgentState)
@@ -46,10 +46,10 @@ def build_workflow(include_tool: bool = False, include_formatter: bool = False):
         return _SequentialFallback(include_tool, include_formatter)
 
 class _SequentialFallback:
-    def __init__(self, include_tool=False, include_formatter=False):
+    def __init__(self, include_tool: bool = False, include_formatter: bool = False) -> None:
         self.include_tool = include_tool
         self.include_formatter = include_formatter
-    async def ainvoke(self, state: dict):
+    async def ainvoke(self, state: dict) -> dict:
         s = dict(state)
         s.setdefault("steps", []); s.setdefault("sources", []); s.setdefault("metadata", {})
         seq = [planner_node, reasoner_node]
@@ -61,13 +61,13 @@ class _SequentialFallback:
             update = await node(s)
             s.update(update)
         return s
-    async def invoke(self, state: dict):
+    async def invoke(self, state: dict) -> dict:
         return await self.ainvoke(state)
 
 _workflow = None
 _workflow_with_tool = None
 
-def get_workflow(include_tool: bool = False):
+def get_workflow(include_tool: bool = False) -> Any:
     global _workflow, _workflow_with_tool
     if include_tool:
         if _workflow_with_tool is None:
