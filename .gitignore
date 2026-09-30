@@ -1,0 +1,42 @@
+# Secrets / local config — never commit
+.env
+.env.*
+!.env.example
+
+# Python
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+*.egg-info/
+
+# Node
+node_modules/
+dist/
+dist-ssr/
+build/
+test-results/
+
+# Logs
+*.log
+logs/
+
+# IDE / editors
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.sw?
+
+# OS
+.DS_Store
+Thumbs.db
+*.suo
+*.ntvs*
+
+# Local uploads / data
+uploads/
+*.sqlite
+*.sqlite3
+*.db

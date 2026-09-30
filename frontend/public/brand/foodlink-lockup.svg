@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 250" role="img" aria-label="FOODLINK AI — Real-Time Food Rescue Infrastructure">
+  <title>FOODLINK AI full lockup</title>
+  <g transform="translate(60,0)">
+    <g stroke="#3aa7b5" stroke-width="1.6" opacity="0.75">
+      <line x1="78" y1="32" x2="162" y2="32"/>
+      <line x1="110.5" y1="45.5" x2="129.5" y2="45.5"/>
+      <line x1="124" y1="78" x2="116" y2="78"/>
+      <line x1="110.5" y1="110.5" x2="129.5" y2="110.5"/>
+      <line x1="78" y1="124" x2="162" y2="124"/>
+    </g>
+    <circle cx="78" cy="78" r="46" fill="none" stroke="#17818f" stroke-width="5"/>
+    <circle cx="162" cy="78" r="46" fill="none" stroke="#17818f" stroke-width="5"/>
+    <g fill="#17818f">
+      <circle cx="78" cy="32" r="5.5"/>
+      <circle cx="32" cy="78" r="5.5"/>
+      <circle cx="78" cy="124" r="5.5"/>
+      <circle cx="45.5" cy="45.5" r="5"/>
+      <circle cx="45.5" cy="110.5" r="5"/>
+      <circle cx="162" cy="32" r="5.5"/>
+      <circle cx="208" cy="78" r="5.5"/>
+      <circle cx="162" cy="124" r="5.5"/>
+      <circle cx="194.5" cy="45.5" r="5"/>
+      <circle cx="194.5" cy="110.5" r="5"/>
+    </g>
+    <g fill="#e4645a">
+      <circle cx="110.5" cy="45.5" r="4.5"/>
+      <circle cx="129.5" cy="110.5" r="4.5"/>
+      <circle cx="124" cy="78" r="4.5"/>
+    </g>
+    <g>
+      <ellipse cx="84" cy="92" rx="19" ry="22" fill="#e4645a"/>
+      <ellipse cx="77" cy="85" rx="6" ry="9" fill="#ef8378" opacity="0.8"/>
+      <path d="M84 70 q1 -8 7 -11" stroke="#c24a40" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <ellipse cx="95" cy="62" rx="7" ry="3.6" fill="#e4645a" transform="rotate(-24 95 62)"/>
+    </g>
+    <g stroke="#e4645a" stroke-linecap="round">
+      <line x1="128" y1="100" x2="128" y2="34" stroke-width="3"/>
+    </g>
+    <g fill="#e4645a">
+      <ellipse cx="121" cy="44" rx="4" ry="8" transform="rotate(-32 121 44)"/>
+      <ellipse cx="135" cy="44" rx="4" ry="8" transform="rotate(32 135 44)"/>
+      <ellipse cx="121" cy="60" rx="4" ry="8" transform="rotate(-32 121 60)"/>
+      <ellipse cx="135" cy="60" rx="4" ry="8" transform="rotate(32 135 60)"/>
+      <ellipse cx="121" cy="76" rx="4" ry="8" transform="rotate(-32 121 76)"/>
+      <ellipse cx="135" cy="76" rx="4" ry="8" transform="rotate(32 135 76)"/>
+      <ellipse cx="128" cy="30" rx="4" ry="7"/>
+    </g>
+    <path d="M116 116 L164 90 L154 86 L188 74 L176 104 L168 94 Z" fill="#e4645a"/>
+  </g>
+  <text x="180" y="198" text-anchor="middle" font-family="'Arial Narrow', Arial, Helvetica, sans-serif" font-weight="900" font-size="44" letter-spacing="2">
+    <tspan fill="#e4645a">FOOD</tspan><tspan fill="#17818f">LINK AI</tspan>
+  </text>
+  <text x="180" y="226" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14.5" letter-spacing="2.4" fill="#3d4657">Real-Time Food Rescue Infrastructure</text>
+</svg>

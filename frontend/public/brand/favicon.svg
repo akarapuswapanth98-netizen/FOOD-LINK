@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="FOODLINK AI icon">
+  <title>FOODLINK AI</title>
+  <rect width="64" height="64" rx="15" fill="#0b0e14"/>
+  <g transform="translate(7,9) scale(0.208)">
+    <circle cx="78" cy="78" r="46" fill="none" stroke="#17818f" stroke-width="19"/>
+    <circle cx="162" cy="78" r="46" fill="none" stroke="#17818f" stroke-width="19"/>
+    <g fill="#17818f">
+      <circle cx="78" cy="32" r="15"/>
+      <circle cx="78" cy="124" r="15"/>
+      <circle cx="162" cy="32" r="15"/>
+      <circle cx="162" cy="124" r="15"/>
+    </g>
+    <ellipse cx="82" cy="92" rx="25" ry="28" fill="#e4645a"/>
+    <ellipse cx="130" cy="58" rx="11" ry="30" fill="#e4645a"/>
+    <path d="M108 120 L168 88 L154 82 L196 66 L180 110 L168 98 Z" fill="#e4645a"/>
+  </g>
+</svg>
