@@ -1,5 +1,9 @@
 """FoodBridge agents - the six LangGraph nodes plus terminal coordinator nodes.
 
+Specialized AI agents that negotiate the rescue allocation and hand off delivery
+tasks autonomously: each node performs one task (validate, filter, score, route,
+verify) and passes control onward without human intervention.
+
 Every node is a pure function returning a partial state update (except the
 final coordinator, which may call the LLM for a natural-language summary).
 Every node emits exactly one AgentEvent into the shared event bus.
@@ -58,7 +62,8 @@ def _parse_dt(value) -> datetime:
 
 # ---------------------------------------------------------------- coordinator
 def coordinator_node(state: dict) -> dict:
-    """Validate the request has a surplus lot + restaurant before anything runs."""
+    """Validate the request has a surplus lot + restaurant before anything runs.
+    First autonomous task in the pipeline: bad input fails here, fast."""
     if state.get("surplus") and state.get("restaurant"):
         ev = _emit(state, "coordinator", "running", "workflow started")
         return _track(state, ev, status="running")
@@ -107,7 +112,8 @@ def restaurant_router(state: dict) -> str:
 
 # -------------------------------------------------------------------- shelter
 def shelter_node(state: dict) -> dict:
-    """Filter candidates: explicit ids, radius, dietary compatibility, usable demand."""
+    """Filter candidates: explicit ids, radius, dietary compatibility, usable demand.
+    Keeps only nearby shelters that can actually receive this surplus lot."""
     wanted = set(state.get("shelter_ids") or [])
     radius = float(state.get("requested_radius_km") or 10.0)
     restaurant = state.get("restaurant") or {}
@@ -153,6 +159,8 @@ def shelter_router(state: dict) -> str:
 # ------------------------------------------------------------------- matching
 def matching_node(state: dict) -> dict:
     """Score candidates (weighted) and allocate with the two-pass greedy.
+    This is where matching and verification negotiate: an over-allocation is
+    sent back here autonomously for exactly one bounded retry.
 
     On a verification retry, shelters implicated by repairable issues are
     excluded so the second pass provably differs from the first.
@@ -192,7 +200,8 @@ def matching_node(state: dict) -> dict:
 
 # ------------------------------------------------------------------ logistics
 def logistics_node(state: dict) -> dict:
-    """Turn allocations into an ordered delivery route (nearest first)."""
+    """Turn allocations into an ordered delivery route (nearest first).
+    Hands off concrete delivery tasks: which shelter, how many meals, what ETA."""
     ordered = sorted(state.get("allocations") or [], key=lambda a: float(a.get("distance_km") or 0))
     batches = []
     total_km = 0.0

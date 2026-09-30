@@ -1,4 +1,6 @@
-/* FOODLINK AI — replaceable API client.
+/* FOODLINK AI — replaceable API client for the real-time (realtime) rescue network.
+   Specialized agents negotiate and hand off tasks autonomously behind these
+   calls; the client only transports tasks and renders reported outcomes.
    Two explicit modes, never mixed silently:
    - LIVE (VITE_API_URL set): real FOODBRIDGE FastAPI. Every failure —
      404/409/422/429/500/offline — surfaces as a real error state.

@@ -1,5 +1,8 @@
 """FoodBridge LangGraph workflow - the six-agent graph with bounded retry.
 
+Specialized agents negotiate the allocation and hand off tasks autonomously in
+real time:
+
     coordinator -> restaurant -> shelter -> matching -> logistics -> verification
         |             |           |                        |
       error         error        error          valid -> coordinator_final

@@ -1,4 +1,9 @@
-"""FoodBridge - multi-agent surplus-food matching (LangGraph).
+"""FoodBridge - multi-agent surplus-food matching that runs autonomously in real time.
+
+Specialized AI agents negotiate and hand off rescue tasks without human input:
+coordinator assigns tasks, restaurant validates surplus, shelter finds nearby
+shelters, matching negotiates the allocation, logistics hands off delivery tasks,
+verification confirms the handoff.
 
 6 agents: coordinator -> restaurant -> shelter -> matching -> logistics -> verification
 (-> bounded retry into matching, or coordinator final/error).

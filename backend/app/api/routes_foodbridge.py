@@ -84,7 +84,7 @@ async def create_surplus(req: CreateSurplusRequest) -> dict:
 
 @router.post("/match", response_model=MatchResponse)
 async def match(req: MatchRequest) -> MatchResponse:
-    """Run the six-agent match workflow. Logical failures return 200 + status=failed."""
+    """Run the six-agent match workflow in real time. Logical failures return 200 + status=failed."""
     store = get_store()
 
     # Resolve surplus lot (unknown id -> 404 AppError per contract)

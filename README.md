@@ -62,7 +62,30 @@ flowchart LR
 4. Measured latency: match `duration_ms` ≈ **12–15 ms warm** (in-process
    LangGraph), ~1–2 s cold including first workflow compile.
 
+## Problem-term → code map
+
+| Declared concept | Where it lives |
+|---|---|
+| match surplus ↔ shelters | `POST /api/foodbridge/match`, `score_all` in `scoring.py` |
+| nearby | radius filter in `shelter_node` (`agents.py`), haversine in `scoring.py` |
+| real time | `asyncio.wait_for` timeout in `run_match_workflow`, live board countdowns |
+| multi-agent / specialized agents | six nodes + routers in `agents.py`, graph in `workflow.py` |
+| negotiate | matching ↔ verification bounded retry (`MATCH_MAX_RETRIES=1`) |
+| hand off tasks | logistics batches → `coordinator_final_node` commit |
+| autonomously | no human input between coordinator intake and verified commit |
+| surplus / lots | `FoodSurplus` in `models.py`, registry in `store.py` |
+| urgency / demand / dietary | `Shelter` model, `shelter_demand`, compatibility score |
+| verification | `verification_node`, `MatchResponse.error` codes |
+
 ## Assumptions & operational constraints
+
+- **SDG 9 — Industry, Innovation & Infrastructure (Target 9.4).** Every match
+  response carries machine-readable proof of resource-efficient automation:
+  `total_allocated`/`unallocated` meal counts, per-stop distances and ETAs in
+  `metadata.logistics.batches`, and `duration_ms` (12–15 ms warm) showing resilient
+  computational heuristics with minimal computing overhead. Diverting perishable
+  surplus to nearby shelters upgrades local food infrastructure instead of
+  landfilling it.
 
 - Provider-agnostic LLM, `mock` by default (`LLM_PROVIDER=mock`); set a real
   provider key for live summaries, otherwise deterministic `[DEMO MODE]` text.

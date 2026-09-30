@@ -14,7 +14,8 @@ Allocation is a two-pass greedy over the ranked list:
   pass 2 - spread the remainder partially across the rest.
 
 Default weights put distance first (0.50) because surplus meals are perishable:
-proximity dominates delivery time, emissions and spoilage risk.
+proximity dominates delivery time, emissions and spoilage risk. Nearby shelters
+therefore win ties, which is exactly the real-time rescue objective.
 """
 import math
 from typing import Dict, Iterable, List, Mapping, Optional, Sequence, Tuple
